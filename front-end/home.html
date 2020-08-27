@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style>
+    #jam-digital{overflow:hidden; width:350px}
+    #hours{float:left; width:100px; height:50px; background-color:#6B9AB8; margin-right:25px}
+    #minute{float:left; width:100px; height:50px; background-color:#A5B1CB}
+    #second{float:right; width:100px; height:50px; background-color:#FF618A; margin-left:25px}
+    #jam-digital p{color:#FFF; font-size:36px; text-align:center; margin-top:4px}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body onLoad="waktu()">
+    <div id="jam-digital">
+        <div id="hours"><p id="jam"></p></div>
+        <div id="minute"><p id="menit"></p></div>
+        <div id="second"><p id="detik"></p></div>
+    </div>
+<br>
+
+    <button id="hello">Hello</button>
+    <br>
+    <a href="#" onclick="logout()">Untuk Logout Disini</a>
+    <div id="status"></div>
+
+</body>
+
+<script type="text/javascript">
+$(document).ready(function() { 
+    $("#hello").click(function(){
+        $('#status').html("Hai " + localStorage.getItem('user') + " ---> Waktu Login Anda " + localStorage.getItem('waktu')); 
+
+});
+    if(localStorage.getItem('user') == null || localStorage.getItem('user')  == '' || localStorage.getItem('user') == "" ){
+        window.location.href = "index.html";
+    }
+});
+</script>
+<script type="text/javascript">
+function logout(){
+    localStorage.clear();
+    window.location.href = "index.html";
+}
+</script>
+<script type="text/javascript">
+    window.setTimeout("waktu()",1000);
+    function waktu() {
+        var tanggal = new Date();
+        setTimeout("waktu()",1000);
+        document.getElementById("jam").innerHTML = tanggal.getHours();
+        document.getElementById("menit").innerHTML = tanggal.getMinutes();
+        document.getElementById("detik").innerHTML = tanggal.getSeconds();
+    }
+</script>
+</html>

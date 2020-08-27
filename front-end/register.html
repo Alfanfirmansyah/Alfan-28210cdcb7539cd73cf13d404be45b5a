@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title></title>
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ <script type="text/javascript">
+  $(document).ready(function() { 
+    $('#password, #confirm_password').on('keyup', function () {
+  if ($('#password').val() == $('#confirm_password').val()) {
+    $('#message').html('Matching').css('color', 'green');
+  } else 
+    $('#message').html('Not Matching').css('color', 'red');
+    });
+});   
+ </script>
+
+ <script type="text/javascript">
+ $(document).ready(function() { 
+ $("#formRegister").submit(function(e) {
+    if ($('#password').val() == $('#confirm_password').val()) {
+          e.preventDefault();
+          $.ajax({
+              url: '../back-end/register.php',
+              type: 'post',
+              data: $(this).serialize(),             
+              success: function(data) {               
+              document.getElementById("formRegister").reset();
+              var datas = $.parseJSON(data);
+              $('#status').html(datas.message);          
+                if(datas.status == 'success' ){
+                  window.location.href = "index.html";
+                }             
+              }
+          });
+         }
+      })
+    });
+
+</script>
+</head>
+<body>
+<form id="formRegister" method="POST">
+ <table>
+  <tr>
+   <td>User Name</td>
+   <td><input type="text" name="username" id="username"></td>
+  </tr>
+  <tr>
+   <td>Password</td>
+   <td><input type="password" name="password" id="password"></td>
+  </tr>
+  <tr>
+   <td>Retype Password</td>
+   <td><input type="password" name="confirm_password" id="confirm_password"></td>
+  </tr>
+  <tr>
+   <td><span id='message'></span></td>
+   <td>
+    <input type="submit" name="simpan" id="simpan" value="Simpan">
+   </td>
+  </tr>
+ </table>
+ <br>
+ <a href="#" onclick="login()">Untuk Kembali Ke Halaman Login Disini</a>
+</form>
+<div id="status"></div>
+</body>
+
+<script type="text/javascript">
+  $(document).ready(function() { 
+      if(localStorage.getItem('user') != undefined ){
+          window.location.href = "home.html";
+      }
+  });
+  </script>
+
+<script type="text/javascript">
+  function login(){
+    window.location.href = "index.html";
+  }
+</script>
+
+</html>
